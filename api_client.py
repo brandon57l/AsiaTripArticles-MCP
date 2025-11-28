@@ -5,17 +5,16 @@ import json
 # The base URL for the deployed Travel Articles API.
 BASE_URL = "https://asiantriparticles-api.onrender.com/api"
 
-def search_articles(keywords: list):
+def search_articles_by_keyword(keyword: str):
     """
-    Searches for articles by a list of keywords.
-    Corresponds to GET /api/articles/search?q=keyword1,keyword2
+    Searches for articles by a single keyword.
+    Corresponds to GET /api/articles/search?q=keyword
     """
-    if not keywords:
-        return {"error": "Keyword list cannot be empty."}
+    if not keyword:
+        return {"error": "Keyword cannot be empty."}
     
-    query_string = ",".join(keywords)
     url = f"{BASE_URL}/articles/search"
-    params = {'q': query_string}
+    params = {'q': keyword}
     
     try:
         response = requests.get(url, params=params)
@@ -70,7 +69,7 @@ def get_article_section_by_title(article_id: str, section_title: str):
 if __name__ == '__main__':
     # Example usage - you can run this file directly to test the client
     print("--- Testing Article Search ---")
-    search_results = search_articles(["tokyo", "food"])
+    search_results = search_articles_by_keyword("tokyo")
     print(json.dumps(search_results, indent=2))
 
     if search_results and 'data' in search_results and search_results['data']:
