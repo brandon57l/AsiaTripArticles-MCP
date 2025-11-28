@@ -1,3 +1,4 @@
+import json
 from mcp.server.fastmcp import FastMCP
 from starlette.middleware.cors import CORSMiddleware
 import uvicorn
@@ -25,28 +26,28 @@ def search_articles(query: str) -> str:
     Cherche des articles contenant des mots-clés spécifiques.
     Par exemple: 'tokyo,food'
     """
-    return search_articles_tool(query)
+    return json.dumps(search_articles_tool(query))
 
 @mcp.tool()
 def get_article_by_id(article_id: str) -> str:
     """
     Récupère le contenu complet d'un article en utilisant son identifiant unique (ID).
     """
-    return get_article_by_id_tool(article_id)
+    return json.dumps(get_article_by_id_tool(article_id))
 
 @mcp.tool()
 def get_article_toc(article_id: str) -> str:
     """
     Récupère la table des matières (la liste des sections) pour un article donné.
     """
-    return get_article_toc_tool(article_id)
+    return json.dumps(get_article_toc_tool(article_id))
 
 @mcp.tool()
 def get_article_section(article_id: str, section_title: str) -> str:
     """
     Récupère le contenu d'une section spécifique d'un article.
     """
-    return get_article_section_tool(article_id, section_title)
+    return json.dumps(get_article_section_tool(article_id, section_title))
 
 # --- POINT D'ENTRÉE PRINCIPAL (Inspiré de votre exemple) ---
 
